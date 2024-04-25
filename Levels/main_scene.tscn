@@ -1,6 +1,17 @@
-[gd_scene load_steps=15 format=3 uid="uid://c83pje8e57vma"]
+[gd_scene load_steps=17 format=3 uid="uid://c83pje8e57vma"]
 
-[ext_resource type="PackedScene" uid="uid://3bg27ttgcddr" path="res://Creatures/pigeon.tscn" id="1_mknfd"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ppese"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_xl4bg"]
+sky_material = SubResource("ProceduralSkyMaterial_ppese")
+
+[sub_resource type="Environment" id="Environment_1ob3v"]
+background_mode = 2
+sky = SubResource("Sky_xl4bg")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="Gradient" id="Gradient_g343k"]
 
@@ -56,6 +67,13 @@ sky = SubResource("Sky_67i3j")
 
 [node name="MainScene" type="Node3D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1ob3v")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_w2uoe")
 
@@ -63,10 +81,6 @@ mesh = SubResource("PlaneMesh_w2uoe")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_iey7v")
-
-[node name="Pigeon" parent="." instance=ExtResource("1_mknfd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-jump_height = 30
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.67732, 10.4728)
