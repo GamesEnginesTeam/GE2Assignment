@@ -75,6 +75,7 @@ func _physics_process(delta):
 		pass
 		
 
+# Input to posess a creature
 func _input(event):
 	if Input.is_physical_key_pressed(KEY_Z) and event.pressed and !event.echo and controlling and camera_to_creature_timer.is_stopped() and !control_button_pressed:
 		camera_to_creature_timer.start()
