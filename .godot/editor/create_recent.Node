@@ -1,10 +1,10 @@
 Camera3D
-Node
 Node3D
+Node
+CollisionShape3D
 MeshInstance3D
+CharacterBody3D
 AnimationPlayer
 Timer
 Marker3D
 NavigationAgent3D
-CollisionShape3D
-CharacterBody3D
