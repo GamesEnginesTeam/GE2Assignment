@@ -1,0 +1,76 @@
+[gd_scene load_steps=15 format=3 uid="uid://c83pje8e57vma"]
+
+[ext_resource type="PackedScene" uid="uid://3bg27ttgcddr" path="res://Creatures/pigeon.tscn" id="1_mknfd"]
+
+[sub_resource type="Gradient" id="Gradient_g343k"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_x1koi"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vurfv"]
+seamless = true
+seamless_blend_skirt = 1.0
+color_ramp = SubResource("Gradient_g343k")
+noise = SubResource("FastNoiseLite_x1koi")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oenlq"]
+albedo_color = Color(0, 0.517647, 0, 1)
+albedo_texture = SubResource("NoiseTexture2D_vurfv")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w2uoe"]
+material = SubResource("StandardMaterial3D_oenlq")
+size = Vector2(500, 500)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_iey7v"]
+data = PackedVector3Array(250, 0, 250, -250, 0, 250, 250, 0, -250, -250, 0, 250, -250, 0, -250, 250, 0, -250)
+
+[sub_resource type="Gradient" id="Gradient_ooo02"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.6)
+colors = PackedColorArray(0, 0.678139, 0.815572, 1, 1, 1, 1, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5u2ay"]
+fractal_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yd7od"]
+width = 2560
+height = 2560
+seamless = true
+seamless_blend_skirt = 1.0
+color_ramp = SubResource("Gradient_ooo02")
+noise = SubResource("FastNoiseLite_5u2ay")
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_c86jv"]
+rayleigh_coefficient = 0.0
+night_sky = SubResource("NoiseTexture2D_yd7od")
+
+[sub_resource type="Sky" id="Sky_67i3j"]
+sky_material = SubResource("PhysicalSkyMaterial_c86jv")
+
+[sub_resource type="Environment" id="Environment_q0kfc"]
+background_mode = 2
+sky = SubResource("Sky_67i3j")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_34ax4"]
+
+[node name="MainScene" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_w2uoe")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_iey7v")
+
+[node name="Pigeon" parent="." instance=ExtResource("1_mknfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.67732, 10.4728)
+environment = SubResource("Environment_q0kfc")
+attributes = SubResource("CameraAttributesPractical_34ax4")
+current = true
+fov = 140.0

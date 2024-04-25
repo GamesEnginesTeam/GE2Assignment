@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://3bg27ttgcddr"]
+
+[ext_resource type="Script" path="res://Creatures/pigeon.gd" id="1_wfdg6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_f2vnx"]
+size = Vector3(2, 0.5, 0.8)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pcvoa"]
+height = 0.1
+radial_segments = 4
+rings = 1
+
+[sub_resource type="SphereMesh" id="SphereMesh_x68ds"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5pjx2"]
+size = Vector3(3, 1.5, 1)
+
+[node name="Pigeon" type="CharacterBody3D" node_paths=PackedStringArray("camera_marker", "camera_to_creature_timer")]
+script = ExtResource("1_wfdg6")
+camera_marker = NodePath("CameraHolder")
+camera_to_creature_timer = NodePath("CameraToCreatureTimer")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0, 0)
+mesh = SubResource("BoxMesh_f2vnx")
+
+[node name="WingR" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+mesh = SubResource("CylinderMesh_pcvoa")
+
+[node name="WingL" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+mesh = SubResource("CylinderMesh_pcvoa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.5, 0)
+mesh = SubResource("SphereMesh_x68ds")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_5pjx2")
+
+[node name="CameraHolder" type="Marker3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 3, 0)
+
+[node name="CameraToCreatureTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true

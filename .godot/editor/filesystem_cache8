@@ -1,0 +1,9 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1714033752
+icon.svg::CompressedTexture2D::2677691318707910925::1713958616::1713958625::1::::<><>::
+::res://Creatures/::1714027297
+CharacterBody3D.gd::GDScript::-1::1713959879::0::1::::<>CharacterBody3D<>::
+pigeon.gd::GDScript::-1::1714027297::0::1::::Creature<>CharacterBody3D<>::
+pigeon.tscn::PackedScene::1967766228980859283::1713990074::0::1::::<><>::res://Creatures/pigeon.gd
+::res://Levels/::1713990074
+main_scene.tscn::PackedScene::7147802872886646028::1713990074::0::1::::<><>::uid://3bg27ttgcddr
