@@ -4,9 +4,10 @@ class_name Creature extends CharacterBody3D
 @export var speed = 5
 @export var jump_height = 5
 @export var controlling = false
+@export var creature_animator: AnimationPlayer
 
 @export_category("Miscellaneous Settings")
-@export var camera_marker: Marker3D
+@export var camera_marker: Node3D
 
 # General Creature Variables
 @export_category("General Settings")
@@ -33,6 +34,7 @@ func _process(delta):
 
 
 func _physics_process(delta):
+	camera_marker.look_at(self.global_position)
 	
 	var duration = float(duration_to_start_control - camera_to_creature_timer.time_left) 
 	var lerp_timeline = Tween.interpolate_value(0.0, 1.0, duration, duration_to_start_control, Tween.TRANS_EXPO, Tween.EASE_OUT)
@@ -48,14 +50,17 @@ func _physics_process(delta):
 	
 	if controlling and camera_to_creature_timer.is_stopped():
 		
-		camera_marker.look_at(self.global_position, Vector3.UP)
+		camera.look_at(self.global_position, Vector3.UP)
 		
 		# Follow the player
 		camera.global_position = lerp(camera.global_position, camera_marker.global_position, 1)
 		
 		# Add the gravity.
 		if not is_on_floor():
+			creature_animator.play("WingFlap")
 			velocity.y -= gravity * delta
+		else:
+			creature_animator.play("RESET")
 
 		# Handle jump.
 		if Input.is_key_pressed(KEY_SPACE) and is_on_floor():
@@ -94,8 +99,10 @@ func jump(jump_height):
 
 
 func control(lerp_timeline, lerp_timeline_rotation):
+	#var rotation_to_creature = camera_marker.global_rotation - camera.global_rotation
+	
 	camera.global_position = lerp(original_camera_switch_position, camera_marker.global_position, lerp_timeline)
-	camera.global_rotation = lerp(camera.global_rotation, camera_marker.global_rotation, lerp_timeline_rotation)
+	#camera.global_rotation = lerp(camera.global_rotation, rotation_to_creature, lerp_timeline_rotation)
 
 
 func uncontrol(lerp_timeline):

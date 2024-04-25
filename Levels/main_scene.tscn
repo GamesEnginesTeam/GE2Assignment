@@ -50,7 +50,6 @@ night_sky = SubResource("NoiseTexture2D_yd7od")
 sky_material = SubResource("PhysicalSkyMaterial_c86jv")
 
 [sub_resource type="Environment" id="Environment_q0kfc"]
-background_mode = 2
 sky = SubResource("Sky_67i3j")
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_34ax4"]
@@ -67,6 +66,7 @@ shape = SubResource("ConcavePolygonShape3D_iey7v")
 
 [node name="Pigeon" parent="." instance=ExtResource("1_mknfd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+jump_height = 30
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.67732, 10.4728)
