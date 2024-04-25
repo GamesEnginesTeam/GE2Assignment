@@ -11,12 +11,32 @@ class_name Creature extends CharacterBody3D
 
 # General Creature Variables
 @export_category("General Settings")
-@onready var camera: Camera3D = $"../Camera3D"
+@export var camera: Camera3D
 @onready var original_camera_switch_position: Vector3 = camera.global_position
 @export var camera_to_creature_timer: Timer 
 @export var duration_to_start_control: float = 2.0
 
+@export_category("Noise Settings")
+@export var noise: FastNoiseLite
+@export var frequency = 0.3
+@export var radius = 10.0
+@export var axis = Axis.Horizontal
+@export var theta = 0
+@export var amplitude = 80
+@export var distance = 5
+@export var boid = self
+@export var vel = Vector3.ZERO
+@export var force = Vector3.ZERO
+@export var acceleration = Vector3.ZERO
+@export var mass = 1
+
+# Enumerators
+enum Axis { Horizontal, Vertical}
+
 var control_button_pressed = false
+var target:Vector3
+var world_target:Vector3
+var new_force = Vector3.ZERO
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -25,6 +45,12 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _ready():
 	camera_to_creature_timer.stop()
 	camera_to_creature_timer.wait_time = duration_to_start_control
+	
+	noise.seed = randi()
+	noise.set_noise_type(FastNoiseLite.TYPE_PERLIN)
+	noise.set_frequency(0.01)
+	noise.set_fractal_lacunarity(2)
+	noise.set_fractal_gain(0.5)
 	pass
 
 
@@ -34,6 +60,17 @@ func _process(delta):
 
 
 func _physics_process(delta):
+	
+	if self.is_in_group("main_boid"):
+			camera.look_at(self.global_position, Vector3.UP)
+	
+	## Add the gravity.
+	#if not is_on_floor():
+		#creature_animator.play("WingFlap")
+		#velocity.y -= gravity * delta
+	#else:
+		#creature_animator.play("RESET")
+	
 	camera_marker.look_at(self.global_position)
 	
 	var duration = float(duration_to_start_control - camera_to_creature_timer.time_left) 
@@ -50,7 +87,8 @@ func _physics_process(delta):
 	
 	if controlling and camera_to_creature_timer.is_stopped():
 		
-		camera.look_at(self.global_position, Vector3.UP)
+		if self.is_in_group("main_boid"):
+			camera.look_at(self.global_position, Vector3.UP)
 		
 		# Follow the player
 		camera.global_position = lerp(camera.global_position, camera_marker.global_position, 1)
@@ -76,8 +114,20 @@ func _physics_process(delta):
 		translate(Vector3(-forward_dir, 0, 0) * speed * delta)
 
 		move_and_slide()
-	else:
-		pass
+	elif !controlling and camera_to_creature_timer.is_stopped():
+		# Add the gravity.
+		if not is_on_floor():
+			creature_animator.play("WingFlap")
+			velocity.y -= gravity * delta
+		else:
+			creature_animator.play("RESET")
+			
+		var noise_force = noise_wander()
+		#force = lerp(force, new_force, delta)
+		
+		#acceleration = new_force / mass
+		#vel += acceleration # * delta
+		boid_stuff(delta, noise_force)
 		
 
 # Input to posess a creature
@@ -107,3 +157,63 @@ func control(lerp_timeline, lerp_timeline_rotation):
 
 func uncontrol(lerp_timeline):
 	camera.global_position = lerp(camera_marker.global_position, original_camera_switch_position, lerp_timeline)
+
+
+func noise_wander():
+	var n  = noise.get_noise_1d(theta)
+	var angle = deg_to_rad(n * amplitude)
+	
+	var delta = get_process_delta_time()
+
+	var rot = boid.global_transform.basis.get_euler()
+	rot.x = 0
+	
+
+	if axis == Axis.Horizontal:
+		target.x = sin(angle)
+		target.z =  cos(angle)
+		target.y = 0
+		rot.z = 0
+	else:
+		target.y = sin(angle)
+		target.z = cos(angle)
+		target.x = 0
+		
+	target *= radius
+
+	var local_target = target + (Vector3.BACK * distance)
+	
+	var projected = Basis.from_euler(rot)
+	
+	world_target = boid.global_transform.origin + (projected * local_target)	
+	theta += frequency * delta * PI * 2.0
+
+	return seek_force(world_target)
+
+func seek_force(target: Vector3):	
+	var toTarget = target - global_transform.origin
+	toTarget = toTarget.normalized()
+	var desired = toTarget * speed
+	return desired - vel
+
+
+func boid_stuff(delta, noise_force):
+	#force = lerp(force, new_force, delta)
+		
+	acceleration = noise_force / mass
+	vel += acceleration #* delta
+	speed = vel.length()
+	if speed > 0:		
+		#vel = vel.limit_length(max_speed)
+		
+		# Damping
+		#vel -= vel * delta * damping
+		
+		set_velocity(vel)
+		print("velocity at end is: " + str(vel))
+		move_and_slide()
+		
+		# Implement Banking as described:
+		# https://www.cs.toronto.edu/~dt/siggraph97-course/cwr87/
+		#var temp_up = global_transform.basis.y.lerp(Vector3.UP + (acceleration * banking), delta * 5.0)
+		#look_at(global_transform.origin - vel.normalized(), temp_up)

@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://Creatures/pigeon.gd" id="1_wfdg6"]
 [ext_resource type="Material" uid="uid://drkx5by2gdejv" path="res://Materials/GreasePencilOutline.tres" id="2_t50ws"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_447fv"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gg0r2"]
 shading_mode = 0
 albedo_color = Color(0.281187, 0.281187, 0.281187, 1)
@@ -82,8 +84,32 @@ _surfaces = [{
 [sub_resource type="BoxShape3D" id="BoxShape3D_5pjx2"]
 size = Vector3(3, 1.5, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_eg4gb"]
-size = Vector3(0.1, 0.25, 1)
+[sub_resource type="Animation" id="Animation_bckfv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WingR:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.349066, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WingL:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.349066, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_atc7f"]
 resource_name = "WingFlap"
@@ -113,44 +139,19 @@ tracks/1/keys = {
 "values": [Vector3(0.349066, 0, 0), Vector3(-0.349066, 0, 0), Vector3(0.349066, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_bckfv"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("WingR:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-0.349066, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("WingL:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0.349066, 0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_toytf"]
 _data = {
 "RESET": SubResource("Animation_bckfv"),
 "WingFlap": SubResource("Animation_atc7f")
 }
 
-[node name="Pigeon" type="CharacterBody3D" node_paths=PackedStringArray("creature_animator", "camera_marker", "camera_to_creature_timer")]
+[node name="Pigeon" type="CharacterBody3D" node_paths=PackedStringArray("creature_animator", "camera_marker", "camera_to_creature_timer", "boid")]
 script = ExtResource("1_wfdg6")
 creature_animator = NodePath("AnimationPlayer")
 camera_marker = NodePath("CameraHolder")
 camera_to_creature_timer = NodePath("CameraToCreatureTimer")
+noise = SubResource("FastNoiseLite_447fv")
+boid = NodePath("")
 
 [node name="Body" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0, 0)
@@ -161,7 +162,7 @@ mesh = SubResource("ArrayMesh_nj3em")
 surface_material_override/0 = ExtResource("2_t50ws")
 
 [node name="WingR" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 1.87939, 0.68404, 0, -0.68404, 1.87939, 0, 0, -0.5)
+transform = Transform3D(2, 0, 0, 0, 1.87939, 0.684042, 0, -0.684042, 1.87939, 0, 0, -0.5)
 mesh = SubResource("CylinderMesh_pcvoa")
 surface_material_override/0 = SubResource("StandardMaterial3D_hig1n")
 
@@ -170,7 +171,7 @@ mesh = SubResource("ArrayMesh_4146h")
 surface_material_override/0 = ExtResource("2_t50ws")
 
 [node name="WingL" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 1.87939, -0.68404, 0, 0.68404, 1.87939, 0, 0, 0.5)
+transform = Transform3D(2, 0, 0, 0, 1.87939, -0.684042, 0, 0.684042, 1.87939, 0, 0, 0.5)
 mesh = SubResource("CylinderMesh_pcvoa")
 surface_material_override/0 = SubResource("StandardMaterial3D_hig1n")
 
@@ -193,9 +194,6 @@ shape = SubResource("BoxShape3D_5pjx2")
 
 [node name="CameraHolder" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraHolder"]
-mesh = SubResource("BoxMesh_eg4gb")
 
 [node name="CameraToCreatureTimer" type="Timer" parent="."]
 wait_time = 2.0

@@ -1,4 +1,4 @@
-res://Levels/main_scene.tscn
-res://Creatures/pigeon.gd
 res://Creatures/pigeon.tscn
 res://Materials/GreasePencilOutline.tres
+res://Creatures/pigeon.gd
+res://Levels/main_scene.tscn

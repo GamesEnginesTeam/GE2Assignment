@@ -1,29 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://c83pje8e57vma"]
+[gd_scene load_steps=19 format=3 uid="uid://c83pje8e57vma"]
 
 [ext_resource type="PackedScene" uid="uid://3bg27ttgcddr" path="res://Creatures/pigeon.tscn" id="1_mknfd"]
-
-[sub_resource type="Gradient" id="Gradient_g343k"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_x1koi"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vurfv"]
-seamless = true
-seamless_blend_skirt = 1.0
-color_ramp = SubResource("Gradient_g343k")
-noise = SubResource("FastNoiseLite_x1koi")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oenlq"]
-albedo_color = Color(0, 0.517647, 0, 1)
-albedo_texture = SubResource("NoiseTexture2D_vurfv")
-uv1_triplanar = true
-uv1_world_triplanar = true
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_w2uoe"]
-material = SubResource("StandardMaterial3D_oenlq")
-size = Vector2(500, 500)
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_iey7v"]
-data = PackedVector3Array(250, 0, 250, -250, 0, 250, 250, 0, -250, -250, 0, 250, -250, 0, -250, 250, 0, -250)
 
 [sub_resource type="Gradient" id="Gradient_ooo02"]
 interpolation_mode = 1
@@ -54,7 +31,55 @@ sky = SubResource("Sky_67i3j")
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_34ax4"]
 
+[sub_resource type="Gradient" id="Gradient_g343k"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_x1koi"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vurfv"]
+seamless = true
+seamless_blend_skirt = 1.0
+color_ramp = SubResource("Gradient_g343k")
+noise = SubResource("FastNoiseLite_x1koi")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oenlq"]
+albedo_color = Color(0, 0.517647, 0, 1)
+albedo_texture = SubResource("NoiseTexture2D_vurfv")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w2uoe"]
+material = SubResource("StandardMaterial3D_oenlq")
+size = Vector2(500, 500)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_iey7v"]
+data = PackedVector3Array(250, 0, 250, -250, 0, 250, 250, 0, -250, -250, 0, 250, -250, 0, -250, 250, 0, -250)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gnctk"]
+noise_type = 2
+frequency = 0.0261
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hukf4"]
+frequency = 0.1173
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_sp65i"]
+noise_type = 4
+frequency = 0.0977
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_b273v"]
+noise_type = 3
+frequency = 0.3199
+
 [node name="MainScene" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.67732, 10.4728)
+environment = SubResource("Environment_q0kfc")
+attributes = SubResource("CameraAttributesPractical_34ax4")
+fov = 140.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_w2uoe")
@@ -64,13 +89,55 @@ mesh = SubResource("PlaneMesh_w2uoe")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_iey7v")
 
-[node name="Pigeon" parent="." instance=ExtResource("1_mknfd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-jump_height = 30
+[node name="Boid" parent="." node_paths=PackedStringArray("camera", "boid") groups=["main_boid"] instance=ExtResource("1_mknfd")]
+camera = NodePath("../Camera3D")
+noise = SubResource("FastNoiseLite_gnctk")
+frequency = 0.5
+radius = 100.0
+distance = 200
+boid = NodePath(".")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.67732, 10.4728)
-environment = SubResource("Environment_q0kfc")
-attributes = SubResource("CameraAttributesPractical_34ax4")
+[node name="Boid2" parent="." node_paths=PackedStringArray("creature_animator", "camera_marker", "camera", "camera_to_creature_timer", "boid") instance=ExtResource("1_mknfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+creature_animator = NodePath("../Boid/AnimationPlayer")
+camera_marker = NodePath("../Boid/CameraHolder")
+camera = NodePath("../Camera3D")
+camera_to_creature_timer = NodePath("../Boid/CameraToCreatureTimer")
+noise = SubResource("FastNoiseLite_hukf4")
+frequency = 0.5
+radius = 100.0
+distance = 200
+boid = NodePath("../Boid")
+
+[node name="Boid3" parent="." node_paths=PackedStringArray("creature_animator", "camera_marker", "camera", "camera_to_creature_timer", "boid") instance=ExtResource("1_mknfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+creature_animator = NodePath("../Boid/AnimationPlayer")
+camera_marker = NodePath("../Boid/CameraHolder")
+camera = NodePath("../Camera3D")
+camera_to_creature_timer = NodePath("../Boid/CameraToCreatureTimer")
+noise = SubResource("FastNoiseLite_sp65i")
+frequency = 0.5
+radius = 100.0
+distance = 200
+boid = NodePath("../Boid")
+
+[node name="Boid4" parent="." node_paths=PackedStringArray("creature_animator", "camera_marker", "camera", "camera_to_creature_timer", "boid") instance=ExtResource("1_mknfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+creature_animator = NodePath("../Boid/AnimationPlayer")
+camera_marker = NodePath("../Boid/CameraHolder")
+camera = NodePath("../Camera3D")
+camera_to_creature_timer = NodePath("../Boid/CameraToCreatureTimer")
+noise = SubResource("FastNoiseLite_b273v")
+frequency = 0.5
+radius = 100.0
+distance = 200
+boid = NodePath("../Boid")
+
+[node name="realCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 23, 38)
 current = true
-fov = 140.0
+
+[editable path="Boid"]
+[editable path="Boid2"]
+[editable path="Boid3"]
+[editable path="Boid4"]
