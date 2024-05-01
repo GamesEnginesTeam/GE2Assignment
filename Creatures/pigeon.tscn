@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://3bg27ttgcddr"]
+[gd_scene load_steps=19 format=3 uid="uid://3bg27ttgcddr"]
 
 [ext_resource type="Script" path="res://Creatures/pigeon.gd" id="1_wfdg6"]
 
@@ -101,15 +101,44 @@ _data = {
 "WingFlap": SubResource("Animation_atc7f")
 }
 
-[node name="Pigeon" type="CharacterBody3D" node_paths=PackedStringArray("creature_animator", "camera_marker", "camera_to_creature_timer") groups=["mother"]]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f40gt"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.01
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tt3ix"]
+next_pass = SubResource("StandardMaterial3D_f40gt")
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ouita"]
+material = SubResource("StandardMaterial3D_tt3ix")
+
+[node name="Pigeon" type="CharacterBody3D" node_paths=PackedStringArray("creature_animator", "camera_marker", "camera_to_creature_timer", "rayCast", "debug_mesh") groups=["mother"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_wfdg6")
 speed = 10
+jump_height = null
+controlling = null
 creature_animator = NodePath("AnimationPlayer")
 camera_marker = NodePath("CameraHolder")
 camera_to_creature_timer = NodePath("CameraToCreatureTimer")
+duration_to_start_control = null
+rayCast = NodePath("Eyes")
+debug_mesh = NodePath("DebugMesh")
 noise = SubResource("FastNoiseLite_447fv")
-boid = NodePath("")
+frequency = null
+radius = null
+axis = null
+theta = null
+amplitude = null
+distance = null
+vel = null
+force = null
+acceleration = null
+mass = null
 
 [node name="Body" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0, 0)
@@ -157,3 +186,11 @@ libraries = {
 "": SubResource("AnimationLibrary_toytf")
 }
 speed_scale = 4.0
+
+[node name="Eyes" type="RayCast3D" parent="."]
+target_position = Vector3(-10, 0, 0)
+
+[node name="DebugMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_ouita")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

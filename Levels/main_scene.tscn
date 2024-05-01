@@ -1,4 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://c83pje8e57vma"]
+[gd_scene load_steps=18 format=3 uid="uid://c83pje8e57vma"]
+
+[ext_resource type="PackedScene" uid="uid://3bg27ttgcddr" path="res://Creatures/pigeon.tscn" id="1_bko30"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ppese"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -12,6 +14,29 @@ background_mode = 2
 sky = SubResource("Sky_xl4bg")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_g343k"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_x1koi"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vurfv"]
+seamless = true
+seamless_blend_skirt = 1.0
+color_ramp = SubResource("Gradient_g343k")
+noise = SubResource("FastNoiseLite_x1koi")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oenlq"]
+albedo_color = Color(0, 0.517647, 0, 1)
+albedo_texture = SubResource("NoiseTexture2D_vurfv")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w2uoe"]
+material = SubResource("StandardMaterial3D_oenlq")
+size = Vector2(500, 500)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_iey7v"]
+data = PackedVector3Array(250, 0, 250, -250, 0, 250, 250, 0, -250, -250, 0, 250, -250, 0, -250, 250, 0, -250)
 
 [sub_resource type="Gradient" id="Gradient_ooo02"]
 interpolation_mode = 1
@@ -42,44 +67,6 @@ sky = SubResource("Sky_67i3j")
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_34ax4"]
 
-[sub_resource type="Gradient" id="Gradient_g343k"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_x1koi"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vurfv"]
-seamless = true
-seamless_blend_skirt = 1.0
-color_ramp = SubResource("Gradient_g343k")
-noise = SubResource("FastNoiseLite_x1koi")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oenlq"]
-albedo_color = Color(0, 0.517647, 0, 1)
-albedo_texture = SubResource("NoiseTexture2D_vurfv")
-uv1_triplanar = true
-uv1_world_triplanar = true
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_w2uoe"]
-material = SubResource("StandardMaterial3D_oenlq")
-size = Vector2(500, 500)
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_iey7v"]
-data = PackedVector3Array(250, 0, 250, -250, 0, 250, 250, 0, -250, -250, 0, 250, -250, 0, -250, 250, 0, -250)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_gnctk"]
-noise_type = 2
-frequency = 0.0261
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_hukf4"]
-frequency = 0.1173
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_sp65i"]
-noise_type = 4
-frequency = 0.0977
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_b273v"]
-noise_type = 3
-frequency = 0.3199
-
 [node name="MainScene" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -103,7 +90,18 @@ environment = SubResource("Environment_q0kfc")
 attributes = SubResource("CameraAttributesPractical_34ax4")
 current = true
 
-[editable path="Boid"]
-[editable path="Boid2"]
-[editable path="Boid3"]
-[editable path="Boid4"]
+[node name="Pigeon" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_bko30")]
+jump_height = null
+controlling = null
+camera = NodePath("../Camera3D")
+duration_to_start_control = null
+frequency = null
+radius = null
+axis = null
+theta = null
+amplitude = null
+distance = null
+vel = null
+force = null
+acceleration = null
+mass = null

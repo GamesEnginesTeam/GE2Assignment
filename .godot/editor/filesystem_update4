@@ -1,8 +1,0 @@
-res://Levels/main_scene.tscn
-res://Materials/GreasePencilOutline.tres
-res://Creatures/pigeon.tscn
-res://Creatures/pigeon.gd
-res://small_pigeon.tscn
-res://small_pigeon.gd
-res://Levels/small_PigeonManager.gd
-res://test_scene.tscn
