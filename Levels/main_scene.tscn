@@ -1,4 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://c83pje8e57vma"]
+[gd_scene load_steps=18 format=3 uid="uid://c83pje8e57vma"]
+
+[ext_resource type="PackedScene" uid="uid://3bg27ttgcddr" path="res://Creatures/pigeon.tscn" id="1_bko30"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ppese"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -87,3 +89,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.67732, 10.4728)
 environment = SubResource("Environment_q0kfc")
 attributes = SubResource("CameraAttributesPractical_34ax4")
 current = true
+
+[node name="Pigeon" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_bko30")]
+jump_height = null
+controlling = null
+camera = NodePath("../Camera3D")
+duration_to_start_control = null
+frequency = null
+radius = null
+axis = null
+theta = null
+amplitude = null
+distance = null
+vel = null
+force = null
+acceleration = null
+mass = null

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmf8j1vh7jmbt"]
+
+[ext_resource type="Script" path="res://BoidStuff/School.gd" id="1_idm8t"]
+[ext_resource type="PackedScene" uid="uid://bt6lo8etrcw3r" path="res://small_pigeon.tscn" id="2_4c630"]
+
+[node name="Root" type="Node3D"]
+
+[node name="School" type="Node3D" parent="."]
+script = ExtResource("1_idm8t")
+fish_scene = ExtResource("2_4c630")
