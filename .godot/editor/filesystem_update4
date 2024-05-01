@@ -1,5 +1,3 @@
-res://Levels/main_scene.tscn
-res://README.md
-res://Creatures/pigeon.tscn
-res://small_pigeon.tscn
-
+res://Creatures/FlyingTriangle.tscn
+res://Creatures/MichaelsWorld.tscn
+res://Creatures/fish.gd

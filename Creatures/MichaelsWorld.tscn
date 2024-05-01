@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://brs5t1dvk2lnx"]
+[gd_scene load_steps=9 format=3 uid="uid://brs5t1dvk2lnx"]
 
 [ext_resource type="Script" path="res://Creatures/fish_manager.gd" id="1_msau3"]
 [ext_resource type="Script" path="res://free_look_camera.gd" id="2_kxwxt"]
-[ext_resource type="PackedScene" uid="uid://cpr2yq4c8gffj" path="res://Creatures/Bird.tscn" id="2_wynan"]
+[ext_resource type="PackedScene" uid="uid://cki41wxkua0py" path="res://Creatures/FlyingTriangle.tscn" id="2_ltg1t"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c2id2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -21,6 +21,11 @@ glow_enabled = true
 transparency = 1
 albedo_color = Color(0.231373, 0.364706, 1, 0.427451)
 
+[sub_resource type="LabelSettings" id="LabelSettings_sunap"]
+line_spacing = 20.0
+font_size = 50
+font_color = Color(0.223529, 0.772549, 0.733333, 1)
+
 [node name="World" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -34,11 +39,7 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 script = ExtResource("1_msau3")
 num_of_units = 50
-unit_scene = ExtResource("2_wynan")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
-script = ExtResource("2_kxwxt")
+unit_scene = ExtResource("2_ltg1t")
 
 [node name="CollisionShape3D" type="CSGBox3D" parent="." groups=["wall"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, -50)
@@ -74,3 +75,61 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
 use_collision = true
 size = Vector3(100, 1, 100)
 material = SubResource("StandardMaterial3D_jhxbt")
+
+[node name="ui_Layer" type="CanvasLayer" parent="."]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="ui_Layer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="ui_Layer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="ui_Layer/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+script = ExtResource("2_kxwxt")
+
+[node name="Label" type="Label" parent="ui_Layer"]
+offset_left = 136.0
+offset_top = 440.0
+offset_right = 183.0
+offset_bottom = 509.0
+text = "W"
+label_settings = SubResource("LabelSettings_sunap")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ui_Layer"]
+offset_left = 72.0
+offset_top = 507.0
+offset_right = 119.0
+offset_bottom = 576.0
+text = "A"
+label_settings = SubResource("LabelSettings_sunap")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="ui_Layer"]
+offset_left = 136.0
+offset_top = 507.0
+offset_right = 183.0
+offset_bottom = 576.0
+text = "S"
+label_settings = SubResource("LabelSettings_sunap")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="ui_Layer"]
+offset_left = 200.0
+offset_top = 507.0
+offset_right = 247.0
+offset_bottom = 576.0
+text = "D"
+label_settings = SubResource("LabelSettings_sunap")
+horizontal_alignment = 1
+vertical_alignment = 1

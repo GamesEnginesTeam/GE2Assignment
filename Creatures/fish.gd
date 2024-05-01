@@ -3,7 +3,7 @@ extends CharacterBody3D
 @export var ALIGNMENT_WEIGHT = 0.4
 @export var COHESION_WEIGHT = 0.2
 @export var SEPARATION_WEIGHT = 0.2
-@export var NEIGHBOR_RADIUS = 3.0
+@export var NEIGHBOR_RADIUS = 5.0
 @export var DETECTION_RADIUS = 10.0
 
 @export var MAX_SPEED = 3.0
@@ -102,12 +102,12 @@ func find_neighbors():
 			if dist < DETECTION_RADIUS:
 				unit_array.append(unit)
 
-func wall_detection(delta):
-	var walls = get_tree().get_nodes_in_group("wall")
-	for wall in walls:
-		var direction_towards_wall = global_position.direction_to(wall.global_position)
-		var distance_to_wall = global_position.distance_to(wall.global_position)
-		if distance_to_wall < 10:
-			# Rotate the creature to look away from the wall using the look_at function
-			var target_direction = -direction_towards_wall.normalized()
-			var target_position = global_position + target_direction
+#func wall_detection(delta):
+	#var walls = get_tree().get_nodes_in_group("wall")
+	#for wall in walls:
+		#var direction_towards_wall = global_position.direction_to(wall.global_position)
+		#var distance_to_wall = global_position.distance_to(wall.global_position)
+		#if distance_to_wall < 10:
+			## Rotate the creature to look away from the wall using the look_at function
+			#var target_direction = -direction_towards_wall.normalized()
+			#var target_position = global_position + target_direction
