@@ -1,4 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://bdqtxopx7x6j4"]
+[gd_scene load_steps=22 format=3 uid="uid://bdqtxopx7x6j4"]
+
+[ext_resource type="Script" path="res://Models/bird_animations.gd" id="1_q7y3k"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5h23t"]
 shading_mode = 0
@@ -101,7 +103,120 @@ _surfaces = [{
 "vertex_data": PackedByteArray(125, 233, 133, 190, 182, 24, 124, 61, 191, 244, 2, 63, 125, 233, 133, 62, 182, 24, 124, 61, 191, 244, 2, 191, 125, 233, 133, 62, 182, 24, 124, 61, 191, 244, 2, 63, 125, 233, 133, 190, 182, 24, 124, 61, 191, 244, 2, 191, 125, 233, 133, 190, 182, 24, 124, 189, 191, 244, 2, 63, 125, 233, 133, 62, 182, 24, 124, 189, 191, 244, 2, 191, 125, 233, 133, 62, 182, 24, 124, 189, 191, 244, 2, 63, 125, 233, 133, 190, 182, 24, 124, 189, 191, 244, 2, 191, 125, 233, 133, 62, 182, 24, 124, 61, 191, 244, 2, 63, 125, 233, 133, 190, 182, 24, 124, 61, 191, 244, 2, 191, 125, 233, 133, 62, 182, 24, 124, 61, 191, 244, 2, 191, 125, 233, 133, 190, 182, 24, 124, 61, 191, 244, 2, 63, 125, 233, 133, 62, 182, 24, 124, 189, 191, 244, 2, 63, 125, 233, 133, 190, 182, 24, 124, 189, 191, 244, 2, 191, 125, 233, 133, 62, 182, 24, 124, 189, 191, 244, 2, 191, 125, 233, 133, 190, 182, 24, 124, 189, 191, 244, 2, 63, 125, 233, 133, 62, 182, 24, 124, 61, 191, 244, 2, 63, 125, 233, 133, 190, 182, 24, 124, 189, 191, 244, 2, 63, 125, 233, 133, 190, 182, 24, 124, 61, 191, 244, 2, 63, 125, 233, 133, 62, 182, 24, 124, 189, 191, 244, 2, 63, 125, 233, 133, 62, 182, 24, 124, 61, 191, 244, 2, 191, 125, 233, 133, 190, 182, 24, 124, 189, 191, 244, 2, 191, 125, 233, 133, 190, 182, 24, 124, 61, 191, 244, 2, 191, 125, 233, 133, 62, 182, 24, 124, 189, 191, 244, 2, 191, 255, 127, 255, 127, 255, 255, 255, 191, 255, 255, 255, 255, 0, 0, 255, 191, 255, 127, 255, 127, 255, 255, 255, 191, 255, 255, 255, 255, 0, 0, 255, 191, 255, 127, 255, 127, 255, 255, 255, 191, 255, 255, 255, 255, 0, 0, 255, 191, 255, 127, 255, 127, 255, 255, 255, 191, 255, 255, 255, 255, 0, 0, 255, 191, 255, 255, 0, 128, 255, 255, 255, 255, 0, 0, 0, 128, 255, 127, 255, 191, 255, 255, 0, 128, 255, 255, 255, 255, 0, 0, 0, 128, 255, 127, 255, 191, 255, 255, 0, 128, 255, 255, 255, 255, 0, 0, 0, 128, 255, 127, 255, 191, 255, 255, 0, 128, 255, 255, 255, 255, 0, 0, 0, 128, 255, 127, 255, 191, 0, 128, 255, 255, 0, 0, 255, 191, 0, 128, 0, 0, 255, 255, 255, 191, 0, 128, 255, 255, 0, 0, 255, 191, 0, 128, 0, 0, 255, 255, 255, 191, 0, 128, 255, 255, 0, 0, 255, 191, 0, 128, 0, 0, 255, 255, 255, 191, 0, 128, 255, 255, 0, 0, 255, 191, 0, 128, 0, 0, 255, 255, 255, 191)
 }]
 
-[node name="BirdModel" type="Node3D"]
+[sub_resource type="Animation" id="Animation_bq38m"]
+resource_name = "Flying"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WingsR:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.785398, -3.14159, 0), Vector3(0.261799, -3.14159, 0), Vector3(-0.785398, -3.14159, 0), Vector3(0.261799, -3.14159, 0), Vector3(-0.785398, -3.14159, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WingsL:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.785398, 0, 0), Vector3(0.261799, 0, 0), Vector3(-0.785398, 0, 0), Vector3(0.261799, 0, 0), Vector3(-0.785398, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WingsL/WingEndNode:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1.5708, 0, 0), Vector3(0.261799, 0, 0), Vector3(1.5708, 0, 0), Vector3(0.261799, 0, 0), Vector3(1.5708, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WingsR/WingEndNode:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1.5708, 0, 0), Vector3(0.261799, 0, 0), Vector3(1.5708, 0, 0), Vector3(0.261799, 0, 0), Vector3(1.5708, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0xurc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WingsR:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.785398, -3.14159, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WingsL:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.785398, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WingsL/WingEndNode:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.5708, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WingsR/WingEndNode:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.5708, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xq21i"]
+_data = {
+"Flying": SubResource("Animation_bq38m"),
+"RESET": SubResource("Animation_0xurc")
+}
+
+[node name="BirdModel" type="Node3D" node_paths=PackedStringArray("anim")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("1_q7y3k")
+anim = NodePath("AnimationPlayer")
 
 [node name="Head" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.05, 0)
@@ -130,29 +245,10 @@ mesh = SubResource("CapsuleMesh_j8d4h")
 mesh = SubResource("ArrayMesh_75737")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-skeleton = NodePath("../WingsL/WingBase")
-
-[node name="WingsL" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01259, 0, 0)
-
-[node name="WingBase" type="MeshInstance3D" parent="WingsL"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.599)
-mesh = SubResource("BoxMesh_68x6b")
-skeleton = NodePath("../..")
-
-[node name="Outline" type="MeshInstance3D" parent="WingsL/WingBase"]
-mesh = SubResource("ArrayMesh_nwj1t")
-
-[node name="WingEnd" type="MeshInstance3D" parent="WingsL"]
-transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 1.5)
-mesh = SubResource("BoxMesh_68x6b")
-skeleton = NodePath("../..")
-
-[node name="Outline" type="MeshInstance3D" parent="WingsL/WingEnd"]
-mesh = SubResource("ArrayMesh_nwj1t")
+skeleton = NodePath("")
 
 [node name="WingsR" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01259, 0, 0)
+transform = Transform3D(-1, -6.18172e-08, 6.18172e-08, 0, 0.707107, 0.707107, -8.74228e-08, 0.707107, -0.707107, 1.01259, 0, 0)
 
 [node name="WingBase" type="MeshInstance3D" parent="WingsR"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.599)
@@ -162,10 +258,41 @@ skeleton = NodePath("../..")
 [node name="Outline" type="MeshInstance3D" parent="WingsR/WingBase"]
 mesh = SubResource("ArrayMesh_nwj1t")
 
-[node name="WingEnd" type="MeshInstance3D" parent="WingsR"]
-transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 1.5)
+[node name="WingEndNode" type="Node3D" parent="WingsR"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.19209e-07, -0.0211751, 1.02469)
+
+[node name="WingEnd" type="MeshInstance3D" parent="WingsR/WingEndNode"]
+transform = Transform3D(0.9, 0, 0, -3.55271e-15, 0.9, 0, 3.55271e-15, 0, 0.9, 0, 0, 0.5)
+mesh = SubResource("BoxMesh_68x6b")
+skeleton = NodePath("../../..")
+
+[node name="Outline" type="MeshInstance3D" parent="WingsR/WingEndNode/WingEnd"]
+mesh = SubResource("ArrayMesh_nwj1t")
+
+[node name="WingsL" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 1.01259, 0, 0)
+
+[node name="WingBase" type="MeshInstance3D" parent="WingsL"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.599)
 mesh = SubResource("BoxMesh_68x6b")
 skeleton = NodePath("../..")
 
-[node name="Outline" type="MeshInstance3D" parent="WingsR/WingEnd"]
+[node name="Outline" type="MeshInstance3D" parent="WingsL/WingBase"]
 mesh = SubResource("ArrayMesh_nwj1t")
+
+[node name="WingEndNode" type="Node3D" parent="WingsL"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.19209e-07, -0.0211751, 1.02469)
+
+[node name="WingEnd" type="MeshInstance3D" parent="WingsL/WingEndNode"]
+transform = Transform3D(0.9, 0, 0, -3.55271e-15, 0.9, 0, 3.55271e-15, 0, 0.9, 0, 0, 0.5)
+mesh = SubResource("BoxMesh_68x6b")
+skeleton = NodePath("../../..")
+
+[node name="Outline" type="MeshInstance3D" parent="WingsL/WingEndNode/WingEnd"]
+mesh = SubResource("ArrayMesh_nwj1t")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xq21i")
+}
+speed_scale = 4.0

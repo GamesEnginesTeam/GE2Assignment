@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cpr2yq4c8gffj"]
+[gd_scene load_steps=6 format=3 uid="uid://cpr2yq4c8gffj"]
 
 [ext_resource type="Script" path="res://Creatures/fish.gd" id="1_7hh5e"]
+[ext_resource type="PackedScene" uid="uid://bdqtxopx7x6j4" path="res://Models/bird_model.tscn" id="2_5f2vt"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_rjmwt"]
 
@@ -12,14 +13,23 @@ radius = 10.0
 
 [node name="CharacterBody3D" type="CharacterBody3D" groups=["boid"]]
 script = ExtResource("1_7hh5e")
+ALIGNMENT_WEIGHT = 0.2
+SEPARATION_WEIGHT = 0.4
+NEIGHBOR_RADIUS = 5.0
+MAX_SPEED = 20.0
+MIN_SPEED = 10.0
+MAX_ACCELERATION = 0.5
+ROTATION_SPEED = 20.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+visible = false
 mesh = SubResource("PrismMesh_rjmwt")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+visible = false
 shape = SubResource("ConvexPolygonShape3D_n3avp")
 
 [node name="Area3D" type="Area3D" parent="."]
@@ -27,7 +37,14 @@ shape = SubResource("ConvexPolygonShape3D_n3avp")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_we8n2")
 
-[node name="BirdModel" type="Node3D" parent="."]
+[node name="Model" type="Node3D" parent="."]
 
-[connection signal="body_entered" from="Area3D" to="BirdModel" method="_on_area_3d_body_entered"]
-[connection signal="body_exited" from="Area3D" to="BirdModel" method="_on_area_3d_body_exited"]
+[node name="BirdModel" parent="Model" instance=ExtResource("2_5f2vt")]
+
+[node name="WingsR" parent="Model/BirdModel" index="3"]
+transform = Transform3D(-1, -6.18172e-08, 6.18172e-08, 0, 0.707107, 0.707107, -8.74228e-08, 0.707107, -0.707107, 1.01259, 0, 0)
+
+[connection signal="body_entered" from="Area3D" to="Model" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="Model" method="_on_area_3d_body_exited"]
+
+[editable path="Model/BirdModel"]
