@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cpr2yq4c8gffj"]
+[gd_scene load_steps=5 format=3 uid="uid://cpr2yq4c8gffj"]
 
 [ext_resource type="Script" path="res://Creatures/fish.gd" id="1_7hh5e"]
 
@@ -9,22 +9,6 @@ points = PackedVector3Array(-0.5, -0.5, -0.5, 0.0146517, 0.470697, 0.470697, 0.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_we8n2"]
 radius = 10.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ol4x6"]
-cull_mode = 1
-shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-grow = true
-grow_amount = 0.02
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wt6om"]
-next_pass = SubResource("StandardMaterial3D_ol4x6")
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-grow_amount = 0.02
-
-[sub_resource type="SphereMesh" id="SphereMesh_52spx"]
-material = SubResource("StandardMaterial3D_wt6om")
 
 [node name="CharacterBody3D" type="CharacterBody3D" groups=["boid"]]
 script = ExtResource("1_7hh5e")
@@ -43,11 +27,7 @@ shape = SubResource("ConvexPolygonShape3D_n3avp")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_we8n2")
 
-[node name="Target" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_52spx")
-skeleton = NodePath("../..")
+[node name="BirdModel" type="Node3D" parent="."]
 
-[node name="FlyingTriangle" type="Node3D" parent="."]
-
-[connection signal="body_entered" from="Area3D" to="FlyingTriangle" method="_on_area_3d_body_entered"]
-[connection signal="body_exited" from="Area3D" to="FlyingTriangle" method="_on_area_3d_body_exited"]
+[connection signal="body_entered" from="Area3D" to="BirdModel" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="BirdModel" method="_on_area_3d_body_exited"]

@@ -12,8 +12,6 @@ extends CharacterBody3D
 @export var MAX_ACCELERATION = 0.2
 @export var ROTATION_SPEED = 2.0
 
-@onready var target = $Target
-
 var alignment = Vector3.ZERO
 var cohesion = Vector3.ZERO
 var separation = Vector3.ZERO

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Creatures/fish_manager.gd" id="1_msau3"]
 [ext_resource type="Script" path="res://free_look_camera.gd" id="2_kxwxt"]
-[ext_resource type="PackedScene" uid="uid://cpr2yq4c8gffj" path="res://Creatures/FlyingTriangle.tscn" id="2_wynan"]
+[ext_resource type="PackedScene" uid="uid://cpr2yq4c8gffj" path="res://Creatures/Bird.tscn" id="2_wynan"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c2id2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -37,6 +37,7 @@ num_of_units = 50
 unit_scene = ExtResource("2_wynan")
 
 [node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 script = ExtResource("2_kxwxt")
 
 [node name="CollisionShape3D" type="CSGBox3D" parent="." groups=["wall"]]
