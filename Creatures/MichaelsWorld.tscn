@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://brs5t1dvk2lnx"]
+[gd_scene load_steps=11 format=3 uid="uid://brs5t1dvk2lnx"]
 
 [ext_resource type="Script" path="res://Creatures/fish_manager.gd" id="1_msau3"]
 [ext_resource type="PackedScene" uid="uid://cpr2yq4c8gffj" path="res://Creatures/Bird.tscn" id="2_gvtve"]
 [ext_resource type="Script" path="res://free_look_camera.gd" id="2_kxwxt"]
+[ext_resource type="AudioStream" uid="uid://dfcc15xk4lf5y" path="res://Audio/GameMusic.mp3" id="4_3re60"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c2id2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -16,22 +17,6 @@ background_mode = 2
 sky = SubResource("Sky_o3ii7")
 tonemap_mode = 2
 glow_enabled = true
-
-[sub_resource type="Gradient" id="Gradient_mv3p2"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.405738, 0.762295)
-colors = PackedColorArray(1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_tml0b"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fmay3"]
-width = 24
-height = 24
-color_ramp = SubResource("Gradient_mv3p2")
-noise = SubResource("FastNoiseLite_tml0b")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6euno"]
-texture = SubResource("NoiseTexture2D_fmay3")
 
 [sub_resource type="LabelSettings" id="LabelSettings_s2hdc"]
 outline_size = 2
@@ -86,16 +71,39 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 script = ExtResource("2_kxwxt")
 camera = NodePath(".")
 camera_to_creature_timer = NodePath("../../../../CameraToCreatureTimer")
-duration_to_start_control = 4.0
+duration_to_start_control = 0.0
 
 [node name="Label" type="Label" parent="ui_Layer"]
-offset_top = 400.0
+offset_top = 408.0
 offset_right = 40.0
+offset_bottom = 457.0
+scale = Vector2(5, 5)
+text = "W
+ASD"
+label_settings = SubResource("LabelSettings_s2hdc")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Label2" type="Label" parent="ui_Layer"]
+offset_left = 744.0
+offset_top = 400.0
+offset_right = 784.0
 offset_bottom = 449.0
 scale = Vector2(5, 5)
-theme_override_styles/normal = SubResource("StyleBoxTexture_6euno")
-text = "w
-asd"
+text = "X"
+label_settings = SubResource("LabelSettings_s2hdc")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Label3" type="Label" parent="ui_Layer"]
+offset_left = 952.0
+offset_top = 400.0
+offset_right = 992.0
+offset_bottom = 449.0
+scale = Vector2(5, 5)
+text = "Z"
 label_settings = SubResource("LabelSettings_s2hdc")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -140,5 +148,9 @@ size = Vector3(100, 1, 100)
 material = SubResource("StandardMaterial3D_jhxbt")
 
 [node name="CameraToCreatureTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 0.001
 one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_3re60")
+autoplay = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bdqtxopx7x6j4"]
+[gd_scene load_steps=25 format=3 uid="uid://bdqtxopx7x6j4"]
 
 [ext_resource type="Script" path="res://Models/bird_animations.gd" id="1_q7y3k"]
 
@@ -102,6 +102,24 @@ _surfaces = [{
 "vertex_count": 24,
 "vertex_data": PackedByteArray(125, 233, 133, 190, 182, 24, 124, 61, 191, 244, 2, 63, 125, 233, 133, 62, 182, 24, 124, 61, 191, 244, 2, 191, 125, 233, 133, 62, 182, 24, 124, 61, 191, 244, 2, 63, 125, 233, 133, 190, 182, 24, 124, 61, 191, 244, 2, 191, 125, 233, 133, 190, 182, 24, 124, 189, 191, 244, 2, 63, 125, 233, 133, 62, 182, 24, 124, 189, 191, 244, 2, 191, 125, 233, 133, 62, 182, 24, 124, 189, 191, 244, 2, 63, 125, 233, 133, 190, 182, 24, 124, 189, 191, 244, 2, 191, 125, 233, 133, 62, 182, 24, 124, 61, 191, 244, 2, 63, 125, 233, 133, 190, 182, 24, 124, 61, 191, 244, 2, 191, 125, 233, 133, 62, 182, 24, 124, 61, 191, 244, 2, 191, 125, 233, 133, 190, 182, 24, 124, 61, 191, 244, 2, 63, 125, 233, 133, 62, 182, 24, 124, 189, 191, 244, 2, 63, 125, 233, 133, 190, 182, 24, 124, 189, 191, 244, 2, 191, 125, 233, 133, 62, 182, 24, 124, 189, 191, 244, 2, 191, 125, 233, 133, 190, 182, 24, 124, 189, 191, 244, 2, 63, 125, 233, 133, 62, 182, 24, 124, 61, 191, 244, 2, 63, 125, 233, 133, 190, 182, 24, 124, 189, 191, 244, 2, 63, 125, 233, 133, 190, 182, 24, 124, 61, 191, 244, 2, 63, 125, 233, 133, 62, 182, 24, 124, 189, 191, 244, 2, 63, 125, 233, 133, 62, 182, 24, 124, 61, 191, 244, 2, 191, 125, 233, 133, 190, 182, 24, 124, 189, 191, 244, 2, 191, 125, 233, 133, 190, 182, 24, 124, 61, 191, 244, 2, 191, 125, 233, 133, 62, 182, 24, 124, 189, 191, 244, 2, 191, 255, 127, 255, 127, 255, 255, 255, 191, 255, 255, 255, 255, 0, 0, 255, 191, 255, 127, 255, 127, 255, 255, 255, 191, 255, 255, 255, 255, 0, 0, 255, 191, 255, 127, 255, 127, 255, 255, 255, 191, 255, 255, 255, 255, 0, 0, 255, 191, 255, 127, 255, 127, 255, 255, 255, 191, 255, 255, 255, 255, 0, 0, 255, 191, 255, 255, 0, 128, 255, 255, 255, 255, 0, 0, 0, 128, 255, 127, 255, 191, 255, 255, 0, 128, 255, 255, 255, 255, 0, 0, 0, 128, 255, 127, 255, 191, 255, 255, 0, 128, 255, 255, 255, 255, 0, 0, 0, 128, 255, 127, 255, 191, 255, 255, 0, 128, 255, 255, 255, 255, 0, 0, 0, 128, 255, 127, 255, 191, 0, 128, 255, 255, 0, 0, 255, 191, 0, 128, 0, 0, 255, 255, 255, 191, 0, 128, 255, 255, 0, 0, 255, 191, 0, 128, 0, 0, 255, 255, 255, 191, 0, 128, 255, 255, 0, 0, 255, 191, 0, 128, 0, 0, 255, 255, 255, 191, 0, 128, 255, 255, 0, 0, 255, 191, 0, 128, 0, 0, 255, 255, 255, 191)
 }]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wdegw"]
+inherit_velocity_ratio = 1.0
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, -2.5, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xgb24"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.219608)
+
+[sub_resource type="SphereMesh" id="SphereMesh_5b24p"]
+material = SubResource("StandardMaterial3D_xgb24")
+radius = 0.2
+height = 0.4
+radial_segments = 12
+rings = 4
 
 [sub_resource type="Animation" id="Animation_bq38m"]
 resource_name = "Flying"
@@ -269,6 +287,11 @@ skeleton = NodePath("../../..")
 [node name="Outline" type="MeshInstance3D" parent="WingsR/WingEndNode/WingEnd"]
 mesh = SubResource("ArrayMesh_nwj1t")
 
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="WingsR/WingEndNode"]
+transform = Transform3D(-1, 1.79264e-06, 1.79264e-06, -1.79264e-06, -8.9407e-08, -1, -1.79264e-06, -1, 8.94069e-08, 0, 0, 0)
+process_material = SubResource("ParticleProcessMaterial_wdegw")
+draw_pass_1 = SubResource("SphereMesh_5b24p")
+
 [node name="WingsL" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 1.01259, 0, 0)
 
@@ -290,6 +313,11 @@ skeleton = NodePath("../../..")
 
 [node name="Outline" type="MeshInstance3D" parent="WingsL/WingEndNode/WingEnd"]
 mesh = SubResource("ArrayMesh_nwj1t")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="WingsL/WingEndNode"]
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_wdegw")
+draw_pass_1 = SubResource("SphereMesh_5b24p")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
