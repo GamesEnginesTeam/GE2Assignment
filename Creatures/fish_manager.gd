@@ -4,7 +4,7 @@ class_name FishManager
 
 
 @export var num_of_units : int =  20
-@export var map_limits : Vector3 = Vector3(5, 5, 5)
+@export var map_limits : Vector3 = Vector3(15, 15, 15)
 @export var unit_scene : PackedScene
 
 func spawn_unit(new_position):
@@ -25,3 +25,5 @@ func _ready() -> void:
 
 	pass # Replace with function body.
 
+func get_num_of_units():
+	return num_of_units

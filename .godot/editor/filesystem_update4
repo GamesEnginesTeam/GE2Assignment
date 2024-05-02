@@ -1,1 +1,6 @@
 res://Creatures/MichaelsWorld.tscn
+res://Creatures/Bird.tscn
+res://free_look_camera.gd
+res://Creatures/fish_manager.gd
+res://Models/bird_model.tscn
+res://Creatures/fish.gd

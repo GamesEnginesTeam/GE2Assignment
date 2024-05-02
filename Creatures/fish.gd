@@ -90,7 +90,7 @@ func calc_separation():
 	separation = separation / count
 	if separation.length() > 0:
 		separation = separation.normalized() * MAX_SPEED - velocity
-		if separation.length() >  MAX_ACCELERATION:
+		if separation.length() > MAX_ACCELERATION:
 			separation = separation.normalized() * MAX_ACCELERATION
 
 func find_neighbors():
@@ -101,6 +101,17 @@ func find_neighbors():
 			var dist = global_position.distance_to(unit.global_position)
 			if dist < DETECTION_RADIUS:
 				unit_array.append(unit)
+				
+func set_values(aw, cw, sw, nr, dr, max_s, min_s, max_a, rs):
+	ALIGNMENT_WEIGHT = aw
+	COHESION_WEIGHT = cw
+	SEPARATION_WEIGHT = sw
+	NEIGHBOR_RADIUS = nr
+	DETECTION_RADIUS = dr
+	MAX_SPEED = max_s
+	MIN_SPEED = min_s
+	MAX_ACCELERATION = max_a
+	ROTATION_SPEED = rs
 
 #func wall_detection(delta):
 	#var walls = get_tree().get_nodes_in_group("wall")

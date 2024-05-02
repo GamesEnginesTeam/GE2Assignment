@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://brs5t1dvk2lnx"]
+[gd_scene load_steps=14 format=3 uid="uid://brs5t1dvk2lnx"]
 
 [ext_resource type="Script" path="res://Creatures/fish_manager.gd" id="1_msau3"]
+[ext_resource type="PackedScene" uid="uid://cpr2yq4c8gffj" path="res://Creatures/Bird.tscn" id="2_gvtve"]
 [ext_resource type="Script" path="res://free_look_camera.gd" id="2_kxwxt"]
-[ext_resource type="PackedScene" uid="uid://cki41wxkua0py" path="res://Creatures/FlyingTriangle.tscn" id="2_ltg1t"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c2id2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -17,14 +17,38 @@ sky = SubResource("Sky_o3ii7")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="Gradient" id="Gradient_mv3p2"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.405738, 0.762295)
+colors = PackedColorArray(1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tml0b"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fmay3"]
+width = 24
+height = 24
+color_ramp = SubResource("Gradient_mv3p2")
+noise = SubResource("FastNoiseLite_tml0b")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6euno"]
+texture = SubResource("NoiseTexture2D_fmay3")
+
+[sub_resource type="LabelSettings" id="LabelSettings_s2hdc"]
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jhxbt"]
 transparency = 1
-albedo_color = Color(0.231373, 0.364706, 1, 0.427451)
+shading_mode = 0
+albedo_color = Color(0.231373, 0.776471, 1, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_sunap"]
-line_spacing = 20.0
-font_size = 50
-font_color = Color(0.223529, 0.772549, 0.733333, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbgdd"]
+transparency = 1
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.0235294, 0.611765, 0.0705882, 1)
+uv1_scale = Vector3(50, 50, 50)
 
 [node name="World" type="Node3D"]
 
@@ -39,44 +63,10 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 script = ExtResource("1_msau3")
 num_of_units = 50
-unit_scene = ExtResource("2_ltg1t")
-
-[node name="CollisionShape3D" type="CSGBox3D" parent="." groups=["wall"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, -50)
-use_collision = true
-size = Vector3(100, 100, 1)
-material = SubResource("StandardMaterial3D_jhxbt")
-
-[node name="CollisionShape3D2" type="CSGBox3D" parent="." groups=["wall"]]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 50, 50, 0)
-use_collision = true
-size = Vector3(100, 100, 1)
-material = SubResource("StandardMaterial3D_jhxbt")
-
-[node name="CollisionShape3D4" type="CSGBox3D" parent="." groups=["wall"]]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -50, 50, 0)
-use_collision = true
-size = Vector3(100, 100, 1)
-material = SubResource("StandardMaterial3D_jhxbt")
-
-[node name="CollisionShape3D3" type="CSGBox3D" parent="." groups=["wall"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 50)
-use_collision = true
-size = Vector3(100, 100, 1)
-material = SubResource("StandardMaterial3D_jhxbt")
-
-[node name="CollisionShape3D5" type="CSGBox3D" parent="." groups=["wall"]]
-use_collision = true
-size = Vector3(100, 1, 100)
-material = SubResource("StandardMaterial3D_jhxbt")
-
-[node name="CollisionShape3D6" type="CSGBox3D" parent="." groups=["wall"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
-use_collision = true
-size = Vector3(100, 1, 100)
-material = SubResource("StandardMaterial3D_jhxbt")
+unit_scene = ExtResource("2_gvtve")
 
 [node name="ui_Layer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="ui_Layer"]
 anchors_preset = 15
@@ -84,52 +74,71 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="ui_Layer/SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="Camera3D" type="Camera3D" parent="ui_Layer/SubViewportContainer/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="ui_Layer/SubViewportContainer/SubViewport" node_paths=PackedStringArray("camera", "camera_to_creature_timer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 script = ExtResource("2_kxwxt")
+camera = NodePath(".")
+camera_to_creature_timer = NodePath("../../../../CameraToCreatureTimer")
+duration_to_start_control = 4.0
 
 [node name="Label" type="Label" parent="ui_Layer"]
-offset_left = 136.0
-offset_top = 440.0
-offset_right = 183.0
-offset_bottom = 509.0
-text = "W"
-label_settings = SubResource("LabelSettings_sunap")
+offset_top = 400.0
+offset_right = 40.0
+offset_bottom = 449.0
+scale = Vector2(5, 5)
+theme_override_styles/normal = SubResource("StyleBoxTexture_6euno")
+text = "w
+asd"
+label_settings = SubResource("LabelSettings_s2hdc")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
-[node name="Label2" type="Label" parent="ui_Layer"]
-offset_left = 72.0
-offset_top = 507.0
-offset_right = 119.0
-offset_bottom = 576.0
-text = "A"
-label_settings = SubResource("LabelSettings_sunap")
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="GlassBox" type="Node3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 
-[node name="Label3" type="Label" parent="ui_Layer"]
-offset_left = 136.0
-offset_top = 507.0
-offset_right = 183.0
-offset_bottom = 576.0
-text = "S"
-label_settings = SubResource("LabelSettings_sunap")
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="CollisionShape3D" type="CSGBox3D" parent="GlassBox" groups=["wall"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, -50)
+use_collision = true
+size = Vector3(100, 100, 1)
+material = SubResource("StandardMaterial3D_jhxbt")
 
-[node name="Label4" type="Label" parent="ui_Layer"]
-offset_left = 200.0
-offset_top = 507.0
-offset_right = 247.0
-offset_bottom = 576.0
-text = "D"
-label_settings = SubResource("LabelSettings_sunap")
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="CollisionShape3D2" type="CSGBox3D" parent="GlassBox" groups=["wall"]]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 50, 50, 0)
+use_collision = true
+size = Vector3(100, 100, 1)
+material = SubResource("StandardMaterial3D_jhxbt")
+
+[node name="CollisionShape3D4" type="CSGBox3D" parent="GlassBox" groups=["wall"]]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -50, 50, 0)
+use_collision = true
+size = Vector3(100, 100, 1)
+material = SubResource("StandardMaterial3D_jhxbt")
+
+[node name="CollisionShape3D3" type="CSGBox3D" parent="GlassBox" groups=["wall"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 50)
+use_collision = true
+size = Vector3(100, 100, 1)
+material = SubResource("StandardMaterial3D_jhxbt")
+
+[node name="Floor" type="CSGBox3D" parent="GlassBox" groups=["wall"]]
+use_collision = true
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_lbgdd")
+
+[node name="CollisionShape3D6" type="CSGBox3D" parent="GlassBox" groups=["wall"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
+use_collision = true
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_jhxbt")
+
+[node name="CameraToCreatureTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
